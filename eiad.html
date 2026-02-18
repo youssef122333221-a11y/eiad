@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دوس عليا جامد</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#111;
+    font-family:Arial;
+    overflow:hidden;
+}
+
+.mainBtn{
+    padding:20px 40px;
+    font-size:26px;
+    border:none;
+    border-radius:15px;
+    cursor:pointer;
+    background:#ff4757;
+    color:white;
+    transition:0.2s;
+}
+
+.mainBtn:active{
+    transform:scale(0.9);
+}
+
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    text-align:center;
+    display:none;
+}
+
+.overlay img{
+    width:250px;
+    margin-bottom:30px;
+}
+
+.shake{
+    animation:shake 0.6s infinite;
+}
+
+@keyframes shake{
+    0%{transform:translate(0,0) rotate(0deg);}
+    20%{transform:translate(-10px,5px) rotate(-5deg);}
+    40%{transform:translate(10px,-5px) rotate(5deg);}
+    60%{transform:translate(-10px,5px) rotate(-5deg);}
+    80%{transform:translate(10px,-5px) rotate(5deg);}
+    100%{transform:translate(0,0) rotate(0deg);}
+}
+
+.message{
+    font-size:50px;
+    font-weight:bold;
+    color:#ff2e63;
+    text-shadow:0 0 25px red;
+    margin-bottom:30px;
+}
+
+.closeBtn{
+    padding:12px 25px;
+    font-size:20px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#00c853;
+    color:black;
+}
+</style>
+</head>
+
+<body>
+
+<button class="mainBtn" id="mainBtn">دوس عليا جامد</button>
+
+<div class="overlay" id="overlay">
+    <img id="dogImage" src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="dog">
+    <div class="message">كسمك يا اياد</div>
+    <button class="closeBtn" onclick="closeOverlay()">اقفل 😂</button>
+</div>
+
+<!-- صوت ضحك بني آدمين حقيقي Loop -->
+<audio id="laughSound" loop>
+  <source src="https://www.orangefreesounds.com/wp-content/uploads/2015/08/Laugh-sound.mp3" type="audio/mpeg">
+  متصفحك لا يدعم الصوت
+</audio>
+
+<script>
+const mainBtn = document.getElementById("mainBtn");
+const overlay = document.getElementById("overlay");
+const dog = document.getElementById("dogImage");
+const sound = document.getElementById("laughSound");
+
+mainBtn.addEventListener("click", ()=>{
+    overlay.style.display = "flex";
+    dog.classList.add("shake");
+
+    // تشغيل صوت الضحك
+    sound.currentTime = 0;
+    sound.volume = 0.7;
+    sound.play().catch(e=>{
+        console.log("فشل تشغيل الصوت:", e);
+    });
+});
+
+function closeOverlay(){
+    overlay.style.display = "none";
+    dog.classList.remove("shake");
+    sound.pause();
+}
+</script>
+
+</body>
+</html>
